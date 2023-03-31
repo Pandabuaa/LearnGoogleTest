@@ -1,3 +1,0 @@
-D:/projects/learngtest/build/CMakeFiles/mytest.dir
-D:/projects/learngtest/build/CMakeFiles/ALL_BUILD.dir
-D:/projects/learngtest/build/CMakeFiles/ZERO_CHECK.dir

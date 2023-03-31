@@ -1,0 +1,27 @@
+﻿  BigInteger.cpp
+BigInteger.cpp(3,7): error C2143: 语法错误: 缺少“;”(在“<”的前面)
+BigInteger.cpp(3,7): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+BigInteger.cpp(4,1): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+BigInteger.cpp(4,1): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+BigInteger.cpp(22,7): error C2143: 语法错误: 缺少“;”(在“<”的前面)
+BigInteger.cpp(22,7): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+BigInteger.cpp(22,1): error C2086: “int vector”: 重定义
+BigInteger.cpp(3): message : 参见“vector”的声明
+BigInteger.cpp(23,1): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+BigInteger.cpp(23,1): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+BigInteger.cpp(39,7): error C2143: 语法错误: 缺少“;”(在“<”的前面)
+BigInteger.cpp(39,7): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+BigInteger.cpp(39,1): error C2086: “int vector”: 重定义
+BigInteger.cpp(3): message : 参见“vector”的声明
+BigInteger.cpp(40,1): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+BigInteger.cpp(40,1): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+BigInteger.cpp(57,7): error C2143: 语法错误: 缺少“;”(在“<”的前面)
+BigInteger.cpp(57,7): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+BigInteger.cpp(57,1): error C2086: “int vector”: 重定义
+BigInteger.cpp(3): message : 参见“vector”的声明
+BigInteger.cpp(58,1): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+BigInteger.cpp(58,1): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+  Complex.cpp
+  Item.cpp
+  Poly.cpp
+  正在生成代码...

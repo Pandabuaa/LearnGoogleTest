@@ -11,7 +11,7 @@ Complex& Complex::operator-=(const Complex& rhs) {
 }
 Complex& Complex::operator*=(const Complex& rhs) {
 	double tempa = a * rhs.a - b * rhs.b;
-	double tempb = a * rhs.b + b + rhs.a;
+	double tempb = a * rhs.b + b * rhs.a;
 	a = tempa;
 	b = tempb;
 	return *this;
@@ -45,6 +45,12 @@ Complex operator/(const Complex& lhs, const Complex& rhs) {
 	return res;
 }
 std::ostream& operator<<(std::ostream& os, const Complex& c) {
-	os << "(" << c.a << "+" << c.b << "i)";
+	if (c.b >= 0) {
+		os << "(" << c.a << "+" << c.b << "i)";
+	}
+	else {
+		os << "(" << c.a  << c.b << "i)";
+	}
+	
 	return os;
 }

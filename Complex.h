@@ -14,8 +14,8 @@ public:
 	Complex& operator*=(const Complex&);
 	Complex& operator/=(const Complex&);
 private:
-	double a;
-	double b;
+	double a = 0;
+	double b = 0;
 };
 Complex operator+(const Complex&, const Complex&);
 Complex operator-(const Complex&, const Complex&);

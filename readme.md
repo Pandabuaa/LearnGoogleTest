@@ -43,35 +43,25 @@ target_link_libraries(mytest ${googletest})
 编写测试文件内容
 ```cpp
 #include <gtest/gtest.h>
-#include "myfunc.h"
-TEST(myfunc,add)
-{
-    GTEST_ASSERT_EQ(add(1,2),3);
-}
 int main(int argc,char* argv[]){
     ::testing::InitGoogleTest(&argc,argv);
     return RUN_ALL_TESTS();
 }
 
 ```
-```cpp
-int add(int a,int b){
-    return a+b;
-}
-```
 此时项目文件内容为
 ```
 └─learngoogletest/
 	├─ googletest/
-  ├─ mytest.cpp
-  ├─ myfunc.h
+  ├─ main.cpp
   └─ CMakeLists.txt
 ```
 
 4. 创建build文件夹执行cmake命令
 
 完成后打开build文件夹的learngoogletest.sln即可运行项目。如图为运行结果：
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680074820210-f019ccac-bada-4b05-a733-b361aac00ad8.png#averageHue=%232c2c2c&clientId=uc149f8f0-16ef-4&from=paste&height=277&id=uf2916af8&name=image.png&originHeight=277&originWidth=791&originalType=binary&ratio=1&rotation=0&showTitle=false&size=14063&status=done&style=none&taskId=u7a5c75e6-7d10-4926-8f6b-7f1732ca0f5&title=&width=791)
+![](F:\LearnGoogleTest\img\environment.PNG)
+
 # gtest相关用法
 ## 使用TEST()宏来定义测试函数
 ```
@@ -81,12 +71,13 @@ TEST(TestSuiteName, TestName) {
 ```
 一个程序将包含若干test suite，一个test suite包含若干test。按照被测代码的结构，逻辑相关的若干test应该放在一个test suite中。
 test body部分为任意有效的C++语句以及各式的google test断言。
-断言包含两大类：ASSERT_*和EXPECT_*.
-ASSERT_*失败时会生成fatal failures并中止程序。
-EXPECT_*失败时会生成nonfatal failures,不会中止程序。
-我们更倾向于使用EXPECT_*，这样可以生成更多的报错信息。而如果报错后测试没有继续执行的意义了，我们使用ASSERT_*。
+断言包含两大类：ASSERT\_\*和EXPECT\_\*.
+ASSERT\_\*失败时会生成fatal failures并中止程序。
+EXPECT\_\*失败时会生成nonfatal failures,不会中止程序。
+我们更倾向于使用EXPECT_*，这样可以生成更多的报错信息。而如果报错后测试没有继续执行的意义了，我们使用ASSERT\_\*。
 当断言失败后，Googletest会打印断言源文件，行号和错误信息，也可以附加自定义的报错信息。
 例一：官方sample1
+
 ```cpp
 // A sample program demonstrating using Google C++ testing framework.
 
@@ -441,4 +432,336 @@ MapTester(&q2_);
 1. 多项式：形如$a_0+a_1x+a_2x^2+\dots+a_nx^n$为多项式，多项式之间可以进行加法和乘法。
 2. 多项式的每一项由未知数$x$，系数$a_n$，指数构成。
 3. 我们规定，系数可以为浮点数，大整数，复数；指数为自然数。
+4. 对复数类，大整数类重载了加减乘除运算符，项为类模板，实现了加法和乘法，多项式基于项实现了加法和乘法。
 
+复数类
+
+```C++
+#pragma once
+#include <iostream>
+class Complex
+{
+friend	std::ostream& operator<<(std::ostream&, const Complex&);
+friend bool operator==(const Complex&, const Complex&);
+public:
+	Complex() = default;
+	// a+bi
+	Complex(double i, double j) :a(i),b(j){
+
+	}
+	virtual Complex& operator+=(const Complex&);
+	virtual Complex& operator-=(const Complex&);
+	virtual Complex& operator*=(const Complex&);
+	virtual Complex& operator/=(const Complex&);
+//private:
+	double a = 0;
+	double b = 0;
+};
+Complex operator+(const Complex&, const Complex&);
+Complex operator-(const Complex&, const Complex&);
+Complex operator*(const Complex&, const Complex&);
+Complex operator/(const Complex&, const Complex&);
+bool operator==(const Complex&, const Complex&);
+std::ostream& operator<<(std::ostream&, const Complex&);
+
+```
+
+大整数类
+
+```C++
+#pragma once
+#include <vector>
+#include <string>
+#include <iostream>
+enum flag {
+	NEG,
+	POS
+};
+class BigInteger
+{
+friend	bool absless(const BigInteger&, const BigInteger&);
+friend	BigInteger operator+ (const BigInteger&, const BigInteger&);
+friend	BigInteger operator- (const BigInteger&, const BigInteger&);
+friend BigInteger operator* (const BigInteger&, const BigInteger&);
+friend std::ostream& operator<<(std::ostream&, const BigInteger&);
+public:
+	BigInteger() {
+		f = POS;
+		nums.push_back(0);
+	}
+	BigInteger(std::string s);
+private:
+	flag f;
+	std::vector<int> nums;
+};
+BigInteger operator+ (const BigInteger&,const BigInteger&);
+BigInteger operator- (const BigInteger&, const BigInteger&);
+BigInteger operator* (const BigInteger&, const BigInteger&);
+std::ostream& operator<<(std::ostream&, const BigInteger&);
+bool absless(const BigInteger&, const BigInteger&);
+```
+
+项
+
+```c++
+#pragma once
+#include<iostream>
+template<typename T>class Item
+{
+	friend std::ostream& operator<<(std::ostream& os, const Item<T>& t) {
+		os << t.coeff << "x^" << t.index;
+		return os;
+	};
+	friend  Item<T> operator+(Item<T>& lhs, Item<T>& rhs) {
+		Item<T> res = lhs;
+		res += rhs;
+		return res;
+	};
+	friend Item<T> operator*(Item<T>& lhs, Item<T>& rhs) {
+		Item<T> res = lhs;
+		res *= rhs;
+		return res;
+	};
+	
+
+public:
+	Item() :coeff(),index(0){}
+	Item(T c,int i):coeff(c),index(i){}
+	Item<T>& operator+=(const Item<T>& rhs) {
+		coeff += rhs.coeff;
+		return *this;
+	}
+	Item<T>& operator*=(const Item<T>& rhs) {
+		coeff *= rhs.coeff;
+		index += rhs.index;
+		return *this;
+	}
+//private:
+	T coeff;
+	int index;
+};
+```
+
+多项式
+
+```C++
+#pragma once
+#include <vector>
+#include<initializer_list>
+#include "Item.h"
+template<typename T> class Poly
+{
+	template<typename S> friend std::ostream& operator<<(std::ostream& os, const Poly<S>& p) {
+		for (auto it = p.items.begin(); it != p.items.end(); it++) {
+			os << "+" << *it;
+		}
+		return os;
+	};
+	template<typename S> friend   Poly<S> operator+(const Poly<S>& lhs, const Poly<S>& rhs) {
+		Poly res = lhs;
+		res += rhs;
+		return res;
+	};
+
+	template<typename S> friend   Poly<S> operator*(const Poly<S>& lhs, const Item<S>& t) {
+		Poly res = lhs;
+		for (auto it = res.items.begin(); it != res.items.end(); it++) {
+			*it *= t;
+		}
+		return res;
+	};
+
+	template<typename S>   friend Poly<S> operator*(const Poly<S>& lhs, const Poly<S>& rhs) {
+		Poly res;
+		for (auto it = rhs.items.begin(); it != rhs.items.end(); it++) {
+			Poly temp = lhs * (*it);
+			res += temp;
+		}
+		return res;
+	};
+public:
+	Poly() { 
+		Item<T> t;
+		items.push_back(t); 
+	}
+	Poly(Item<T> t) {
+		items.push_back(t);
+	}
+	Poly(std::initializer_list<Item<T>> il) {
+		for (auto it = il.begin(); it != il.end(); it++) {
+			items.push_back(*it);
+		}
+	}
+	Poly<T>& operator+=(const Poly<T>& rhs) {
+		auto lit = items.begin();
+		auto rit = rhs.items.begin();
+		while (lit != items.end() && rit != rhs.items.end()) {
+			if (lit->index == rit->index) {
+				*lit += *rit;
+				lit++;
+				rit++;
+			}
+			else if (lit->index > rit->index) {
+				lit++;
+			}
+			else {
+				//insert
+				lit = items.insert(lit, *rit);
+				lit++;
+				rit++;
+			}
+		}
+		while (rit != rhs.items.end()) {
+			items.push_back(*rit);
+		}
+		return *this;
+	}
+	
+private:
+	std::vector<Item<T>> items;
+};
+```
+
+## 单元测试
+
+Complex, BigInteger, Item, Poly四个类中，Poly依赖于Item，Item又依赖于Complex和BigInteger.可以先对Complex和BigInteger进行单元测试，保证被依赖代码的正确性。
+
+以ComplexTest为例
+
+```C++
+#include<gtest/gtest.h>
+#include"Complex.h"
+class ComplexTest : public ::testing::Test
+{
+protected:
+	void SetUp() override {
+		c1 = Complex(0.3, 0.4);
+		c2 = Complex(0.1, 0.1);//delta
+		c3 = Complex(0.4, 0.5);//add
+		c4 = Complex(0.2, 0.3);//sub
+		c5 = Complex(-0.01, 0.07);//mul
+		c6 = Complex(3.5, 0.5);//div
+	}
+	Complex c1,c2,c3,c4,c5,c6;
+};
+TEST_F(ComplexTest, DefaultConstructor) {
+	Complex c;
+	EXPECT_EQ(c.a, 0);
+	EXPECT_EQ(c.b, 0);
+}
+
+TEST_F(ComplexTest, CusteomConstructor) {
+	double a = 3.1415926;
+	double b = 2.71828;
+	Complex c(a,b);
+	EXPECT_EQ(c.a, a);
+	EXPECT_EQ(c.b, b);
+}
+
+TEST_F(ComplexTest, SelfAdd) {
+	c1 += c2;
+	EXPECT_TRUE(c1==c3);
+}
+
+TEST_F(ComplexTest, SelfSub) {
+	c1 -= c2;
+	EXPECT_TRUE(c1== c4);
+}
+
+TEST_F(ComplexTest, SelfMul) {
+	c1 *= c2;
+	EXPECT_TRUE(c1==c5);
+}
+
+TEST_F(ComplexTest, SelfDiv) {
+	c1 /= c2;
+	EXPECT_TRUE(c1 == c6);
+}
+
+TEST_F(ComplexTest, Add) {
+	EXPECT_TRUE(c1+c2 ==c3);
+}
+
+TEST_F(ComplexTest, Sub) {
+	EXPECT_TRUE(c1-c2 == c4);
+}
+
+TEST_F(ComplexTest, Mul) {
+	EXPECT_TRUE(c1*c2 == c5);
+}
+
+TEST_F(ComplexTest, Div) {
+	EXPECT_TRUE(c1/c2 == c6);
+}
+```
+
+测试结果
+
+![](F:\LearnGoogleTest\img\ComplexTest.PNG)
+
+## Mock Class
+
+Complex和BigInteger代表实际工作中被依赖的代码和接口，Item和Poly代表待测的代码。若是被依赖的代码还未完成或是每次调用的代价比较大，可以考虑对其进行mock。
+
+### 创建Mock##类
+
+对类进行mock时要求其函数为虚函数，否则需要通过模板的方式实现。对于自由函数进行mock时，需要引入抽象类，由该类的子类调用自由函数，再进行mock。
+
+对包含虚函数的类进行Mock。因为函数名不能为重载的操作符，因此用等价的函数代替。
+
+```C++
+#include"Complex.h"
+#include <gmock/gmock.h>
+class MockComplex :public Complex{
+public:
+	//MOCK_METHOD (Complex&, operator+=,(const Complex&),(override));
+	//MOCK_METHOD (Complex&, operator-=,(const Complex&), (override));
+	//MOCK_METHOD (Complex&, operator*=,(const Complex&), (override));
+	//MOCK_METHOD (Complex&, operator/=,(const Complex&), (override));
+    MOCK_METHOD(Complex&, add, (const Complex&), (override));
+	MOCK_METHOD(Complex&, sub, (const Complex&), (override));
+	MOCK_METHOD(Complex&, mul, (const Complex&), (override));
+	MOCK_METHOD(Complex&, div, (const Complex&), (override));
+};
+```
+
+### 编写EXPECT_CALL
+
+注意必须在函数调用之前编写EXPECT_CALL
+
+```C++
+#include"Complex.h"
+#include "Item.h"
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+class MockComplex :public Complex{
+public:
+	MOCK_METHOD(Complex&, add, (const Complex&), (override));
+	MOCK_METHOD(Complex&, sub, (const Complex&), (override));
+	MOCK_METHOD(Complex&, mul, (const Complex&), (override));
+	MOCK_METHOD(Complex&, div, (const Complex&), (override));
+};
+
+TEST(ItemTest, SelfAdd) {
+	MockComplex complex;
+	EXPECT_CALL(complex, add(complex))
+		.Times(1);
+	Item<Complex> t1(complex,2);
+	t1 += t1;
+}
+```
+
+其中EXPECT_CALL()的通用格式为：
+
+```C++
+EXPECT_CALL(mock_object, method(matchers))
+    .Times(cardinality)
+    .WillOnce(action)
+    .WillRepeatedly(action);
+```
+
+### 测试结果
+
+![](F:\LearnGoogleTest\img\ItemTest.PNG)
+
+失败原因为Item的+=运算调用的是Complex的+=运算，而不是等价函数Add。

@@ -60,7 +60,7 @@ int main(int argc,char* argv[]){
 4. 创建build文件夹执行cmake命令
 
 完成后打开build文件夹的learngoogletest.sln即可运行项目。如图为运行结果：
-![](img\environment.PNG)
+![](.\img\environment.PNG)
 
 # gtest相关用法
 ## 使用TEST()宏来定义测试函数
@@ -697,7 +697,7 @@ TEST_F(ComplexTest, Div) {
 
 测试结果
 
-![](img\ComplexTest.PNG)
+![](.\img\ComplexTest.PNG)
 
 ## Mock Class
 
@@ -762,6 +762,6 @@ EXPECT_CALL(mock_object, method(matchers))
 
 ### 测试结果
 
-![](img\ItemTest.PNG)
+![](.\img\ItemTest.PNG)
 
 失败原因为Item的+=运算调用的是Complex的+=运算，而不是等价函数Add。

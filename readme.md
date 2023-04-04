@@ -47,7 +47,6 @@ int main(int argc,char* argv[]){
     ::testing::InitGoogleTest(&argc,argv);
     return RUN_ALL_TESTS();
 }
-
 ```
 此时项目文件内容为
 ```
@@ -60,8 +59,7 @@ int main(int argc,char* argv[]){
 4. 创建build文件夹执行cmake命令
 
 完成后打开build文件夹的learngoogletest.sln即可运行项目。如图为运行结果：
-![](.\img\environment.PNG)
-
+![](.%5Cimg%5Cenvironment.PNG#id=cDoUj&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)![environment.PNG](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680488139638-1032f0a6-27ce-4eaf-ae33-1c76b475f5de.png#averageHue=%23110f0e&clientId=ud71e52c7-c67f-4&from=paste&height=94&id=u68f413e1&name=environment.PNG&originHeight=94&originWidth=927&originalType=binary&ratio=1&rotation=0&showTitle=false&size=7344&status=done&style=none&taskId=u48a6ef25-516d-4766-b113-47460efb891&title=&width=927)
 # gtest相关用法
 ## 使用TEST()宏来定义测试函数
 ```
@@ -71,13 +69,12 @@ TEST(TestSuiteName, TestName) {
 ```
 一个程序将包含若干test suite，一个test suite包含若干test。按照被测代码的结构，逻辑相关的若干test应该放在一个test suite中。
 test body部分为任意有效的C++语句以及各式的google test断言。
-断言包含两大类：ASSERT\_\*和EXPECT\_\*.
-ASSERT\_\*失败时会生成fatal failures并中止程序。
-EXPECT\_\*失败时会生成nonfatal failures,不会中止程序。
-我们更倾向于使用EXPECT_*，这样可以生成更多的报错信息。而如果报错后测试没有继续执行的意义了，我们使用ASSERT\_\*。
+断言包含两大类：ASSERT_*和EXPECT_*.
+ASSERT_*失败时会生成fatal failures并中止程序。
+EXPECT_*失败时会生成nonfatal failures,不会中止程序。
+我们更倾向于使用EXPECT_*，这样可以生成更多的报错信息。而如果报错后测试没有继续执行的意义了，我们使用ASSERT_*。
 当断言失败后，Googletest会打印断言源文件，行号和错误信息，也可以附加自定义的报错信息。
 例一：官方sample1
-
 ```cpp
 // A sample program demonstrating using Google C++ testing framework.
 
@@ -175,7 +172,7 @@ TEST(IsPrimeTest, Positive) {
 }  // namespace
 ```
 该测试程序包含两个test suite，分别对应两个待测的函数。每个test suite又包含若干test，分情况讨论实现测试的完备性。
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680145701070-f3a55eab-8a6e-4714-a684-981b8fcbdc70.png#averageHue=%23161616&clientId=u61b58ecc-c0ed-4&from=paste&height=296&id=u8f294368&name=image.png&originHeight=296&originWidth=466&originalType=binary&ratio=1&rotation=0&showTitle=false&size=10369&status=done&style=none&taskId=uf4b057eb-c03d-40ab-a73e-f8c9fb1bde0&title=&width=466)
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680145701070-f3a55eab-8a6e-4714-a684-981b8fcbdc70.png#averageHue=%23161616&clientId=u61b58ecc-c0ed-4&from=paste&height=296&id=u8f294368&name=image.png&originHeight=296&originWidth=466&originalType=binary&ratio=1&rotation=0&showTitle=false&size=10369&status=done&style=none&taskId=uf4b057eb-c03d-40ab-a73e-f8c9fb1bde0&title=&width=466#averageHue=%23161616&id=eq4EF&originHeight=296&originWidth=466&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
 ## 使用TEST_F()宏来定义测试函数
 当一个test suite中的多个test需要共享对象和子程序时，可以将它们放置在一个test fixture类中。
 定义一个fixture类：
@@ -335,7 +332,6 @@ const Queue& operator=(const Queue&);
 };
 
 #endif  // GOOGLETEST_SAMPLES_SAMPLE3_INL_H_
-
 ```
 ```cpp
 #include "sample3-inl.h"
@@ -422,10 +418,9 @@ MapTester(&q1_);
 MapTester(&q2_);
 }
 }  // namespace
-
 ```
 测试结果
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680147711828-fbec2d5b-01cf-4aa4-92e9-5a1d68e12f6c.png#averageHue=%23191919&clientId=u61b58ecc-c0ed-4&from=paste&height=152&id=uf52e4873&name=image.png&originHeight=152&originWidth=437&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5952&status=done&style=none&taskId=ud6f763cb-a944-4236-98a6-8d689579225&title=&width=437)
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680147711828-fbec2d5b-01cf-4aa4-92e9-5a1d68e12f6c.png#averageHue=%23191919&clientId=u61b58ecc-c0ed-4&from=paste&height=152&id=uf52e4873&name=image.png&originHeight=152&originWidth=437&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5952&status=done&style=none&taskId=ud6f763cb-a944-4236-98a6-8d689579225&title=&width=437#averageHue=%23191919&id=hGuYO&originHeight=152&originWidth=437&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
 # gmock相关用法
 ## demo说明
 
@@ -434,9 +429,9 @@ MapTester(&q2_);
 3. 我们规定，系数可以为浮点数，大整数，复数；指数为自然数。
 4. 对复数类，大整数类重载了加减乘除运算符，项为类模板，实现了加法和乘法，多项式基于项实现了加法和乘法。
 
+源代码仓库：[https://github.com/Pandabuaa/LearnGoogleTest.git](https://github.com/Pandabuaa/LearnGoogleTest.git)
 复数类
-
-```C++
+```c
 #pragma once
 #include <iostream>
 class Complex
@@ -463,12 +458,9 @@ Complex operator*(const Complex&, const Complex&);
 Complex operator/(const Complex&, const Complex&);
 bool operator==(const Complex&, const Complex&);
 std::ostream& operator<<(std::ostream&, const Complex&);
-
 ```
-
 大整数类
-
-```C++
+```c
 #pragma once
 #include <vector>
 #include <string>
@@ -500,10 +492,8 @@ BigInteger operator* (const BigInteger&, const BigInteger&);
 std::ostream& operator<<(std::ostream&, const BigInteger&);
 bool absless(const BigInteger&, const BigInteger&);
 ```
-
-项
-
-```c++
+项类
+```c
 #pragma once
 #include<iostream>
 template<typename T>class Item
@@ -541,10 +531,8 @@ public:
 	int index;
 };
 ```
-
-多项式
-
-```C++
+多项式类
+```c
 #pragma once
 #include <vector>
 #include<initializer_list>
@@ -621,14 +609,10 @@ private:
 	std::vector<Item<T>> items;
 };
 ```
-
 ## 单元测试
-
 Complex, BigInteger, Item, Poly四个类中，Poly依赖于Item，Item又依赖于Complex和BigInteger.可以先对Complex和BigInteger进行单元测试，保证被依赖代码的正确性。
-
 以ComplexTest为例
-
-```C++
+```c
 #include<gtest/gtest.h>
 #include"Complex.h"
 class ComplexTest : public ::testing::Test
@@ -694,22 +678,15 @@ TEST_F(ComplexTest, Div) {
 	EXPECT_TRUE(c1/c2 == c6);
 }
 ```
-
 测试结果
-
-![](.\img\ComplexTest.PNG)
-
+![ComplexTest.PNG](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680488379107-0a0f7c16-d5dc-4539-ae6b-2392b3c5bd17.png#averageHue=%231d1c1c&clientId=ud71e52c7-c67f-4&from=paste&height=905&id=u6f5a3214&name=ComplexTest.PNG&originHeight=905&originWidth=1200&originalType=binary&ratio=1&rotation=0&showTitle=false&size=89404&status=done&style=none&taskId=u4e257985-790e-4876-aeb8-83cc9fe48f3&title=&width=1200)
 ## Mock Class
-
 Complex和BigInteger代表实际工作中被依赖的代码和接口，Item和Poly代表待测的代码。若是被依赖的代码还未完成或是每次调用的代价比较大，可以考虑对其进行mock。
-
 ### 创建Mock##类
+对类进行mock时要求其函数为虚函数，否则需要通过模板的方式实现。对自由函数进行mock时，需要引入抽象类，由该类的子类调用自由函数，再进行mock。
 
-对类进行mock时要求其函数为虚函数，否则需要通过模板的方式实现。对于自由函数进行mock时，需要引入抽象类，由该类的子类调用自由函数，再进行mock。
-
-对包含虚函数的类进行Mock。因为函数名不能为重载的操作符，因此用等价的函数代替。
-
-```C++
+1. 对包含虚函数的类进行Mock：以Complex类为例。因为函数名不能为重载的操作符，因此用等价的函数代替。
+```c
 #include"Complex.h"
 #include <gmock/gmock.h>
 class MockComplex :public Complex{
@@ -724,44 +701,125 @@ public:
 	MOCK_METHOD(Complex&, div, (const Complex&), (override));
 };
 ```
+MOCK_METHOD的各个参数可以由函数声明用逗号分隔得到，你仅需在此声明，函数定义将由MOCK_METHOD宏自动生成。
+与函数声明相比，多出来的是第四个参数(override)，这里为一个由逗号分隔的说明符列表。还可以接受的说明符包括：
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680575153033-e3a9c724-aac4-4ed7-80f7-63a4002b802a.png#averageHue=%23f2f5c7&clientId=u3d0fa12b-5f5a-4&from=paste&height=439&id=u90b8ca33&name=image.png&originHeight=439&originWidth=561&originalType=binary&ratio=1&rotation=0&showTitle=false&size=34089&status=done&style=none&taskId=uf565f8b8-e021-432e-972f-585d94f56ad&title=&width=561)
+MOCK_METHOD必须在public下，不论原函数的访问权限是public,protected还是private。
+参数中的逗号会影响宏的解析，需要再嵌套一层括号加以保护。例：
+```cpp
+class MyMock {
+ public:
+  // The following 2 lines will not compile due to commas in the arguments:
+  MOCK_METHOD(std::pair<bool, int>, GetPair, ());              // Error!
+  MOCK_METHOD(bool, CheckMap, (std::map<int, double>, bool));  // Error!
 
+  // One solution - wrap arguments that contain commas in parentheses:
+  MOCK_METHOD((std::pair<bool, int>), GetPair, ());
+  MOCK_METHOD(bool, CheckMap, ((std::map<int, double>), bool));
+
+  // Another solution - use type aliases:
+  using BoolAndInt = std::pair<bool, int>;
+  MOCK_METHOD(BoolAndInt, GetPair, ());
+  using MapIntDouble = std::map<int, double>;
+  MOCK_METHOD(bool, CheckMap, (MapIntDouble, bool));
+};
+```
+
+2. 对类中非虚函数进行Mock：以Item类为例。Item类中的add,mul函数不是虚函数，因此不能直接用MockItem继承Item。声明MockItem类与之前相似，区别是MOCK_METHOD宏参数中没有override。现在Item与MockItem没有建立联系，即我们无法在原来使用Item的代码中替换MockItem。这时需要声明一个类模板，它可以接受Item和MockItem两种类型，同时需要修改我们使用Item的代码。将使用Item变为使用ItemHub，在非测试时用Item实例化该模板，在测试时用MockItem实例化该模板。
+```cpp
+#include <gmock/gmock.h>
+#include "Item.h"
+template<typename T> class MockItem {
+public:
+	MOCK_METHOD(Item<T> ,add,(Item<T>&, Item<T>&));
+	MOCK_METHOD(Item<T> ,mul,(Item<T>&, Item<T>&));
+};
+
+template<template<typename S>typename Mocktype, typename T> class ItemHub {
+public:
+	Mocktype<T> add(Mocktype<T>&, Mocktype<T>&);
+	Mocktype<T> mul(Mocktype<T>&, Mocktype<T>&);
+};
+```
+
+3. 对类外的自由函数进行Mock：以BigInteger为例。我们无法直接mock一个自由函数，但是可以使用中间类BigIntegerCal将自由函数包裹起来，并将其声明为虚函数，同时修改使用这些自由函数的代码，改为用BigIntegreCal类去调用。此时MockBigInteger便可以继承BigIntegerCal类，对这些函数接口进行mock。
+```cpp
+#include "BigInteger.h"
+#include <gmock/gmock.h>
+class BigIntegerCal {
+	virtual BigInteger add(const BigInteger& lhs, const BigInteger& rhs) {
+		return lhs + rhs;
+	}
+
+	virtual BigInteger sub(const BigInteger& lhs, const BigInteger& rhs) {
+		return lhs - rhs;
+	}
+
+	virtual BigInteger mul(const BigInteger& lhs, const BigInteger& rhs) {
+		return lhs * rhs;
+	}
+};
+
+class MockBigInteger :public BigIntegerCal {
+	MOCK_METHOD(BigInteger, add, (const BigInteger& lhs, const BigInteger& rhs), (override));
+	MOCK_METHOD(BigInteger, sub, (const BigInteger& lhs, const BigInteger& rhs), (override));
+	MOCK_METHOD(BigInteger, mul, (const BigInteger& lhs, const BigInteger& rhs), (override));
+};
+```
 ### 编写EXPECT_CALL
-
-注意必须在函数调用之前编写EXPECT_CALL
-
-```C++
+Mock一个类并没有真的去实现它，因此在类内的函数被调用时我们需要规定函数的返回值。通过编写EXPECT_CALL来预设函数未来的行为，注意必须在函数调用之前编写EXPECT_CALL，如果实际运行结果与期待不符，程序将会报告错误。
+先写一个简单的例子
+```cpp
 #include"Complex.h"
 #include "Item.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 class MockComplex :public Complex{
 public:
-	MOCK_METHOD(Complex&, add, (const Complex&), (override));
-	MOCK_METHOD(Complex&, sub, (const Complex&), (override));
-	MOCK_METHOD(Complex&, mul, (const Complex&), (override));
-	MOCK_METHOD(Complex&, div, (const Complex&), (override));
+MOCK_METHOD(Complex&, add, (const Complex&), (override));
+MOCK_METHOD(Complex&, sub, (const Complex&), (override));
+MOCK_METHOD(Complex&, mul, (const Complex&), (override));
+MOCK_METHOD(Complex&, div, (const Complex&), (override));
 };
 
 TEST(ItemTest, SelfAdd) {
-	MockComplex complex;
-	EXPECT_CALL(complex, add(complex))
-		.Times(1);
-	Item<Complex> t1(complex,2);
-	t1 += t1;
+    MockComplex complex;
+    EXPECT_CALL(complex, add(complex))
+        .Times(1);
+    Item<Complex> t1(complex,2);
+    t1 += t1;
 }
 ```
-
-其中EXPECT_CALL()的通用格式为：
-
-```C++
-EXPECT_CALL(mock_object, method(matchers))
-    .Times(cardinality)
-    .WillOnce(action)
-    .WillRepeatedly(action);
-```
-
-### 测试结果
-
-![](.\img\ItemTest.PNG)
-
+测试结果
+![ItemTest.PNG](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680488415944-cca3e4fd-9721-4177-bda3-9033a27f564f.png#averageHue=%23100f0e&clientId=ud71e52c7-c67f-4&from=paste&height=231&id=ucde72343&name=ItemTest.PNG&originHeight=231&originWidth=1563&originalType=binary&ratio=1&rotation=0&showTitle=false&size=22244&status=done&style=none&taskId=ud1c89740-a66d-469c-a0a8-fc8e04fbde4&title=&width=1563)
 失败原因为Item的+=运算调用的是Complex的+=运算，而不是等价函数Add。
+其中EXPECT_CALL()的通用格式为：
+```c
+EXPECT_CALL(mock_object, method_name(matchers...))
+    .With(multi_argument_matcher)  // Can be used at most once
+    .Times(cardinality)            // Can be used at most once
+    .InSequence(sequences...)      // Can be used any number of times
+    .After(expectations...)        // Can be used any number of times
+    .WillOnce(action)              // Can be used any number of times
+    .WillRepeatedly(action)        // Can be used at most once
+    .RetiresOnSaturation();        // Can be used at most once
+```
+#### Matcher
+当一个函数调用的参数满足EXPECT_CALL的所有matchers时，EXPECT_CALL才会被应用。
+#### Cardinality
+.Times(cardinality)从句规定函数调用次数。
+Times(0)表示函数禁止被调用。
+Times(n)表示函数被调用恰好n次。
+Times(AtLeast(n))表示函数至少被调用n次。
+Times()也可以省略，将由WillOnce()和WillRepeatedly()语句进行推测
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/34859586/1680580174447-e09ef74e-0c38-4135-96ce-09f0ed4da77a.png#averageHue=%23daaf79&clientId=u9b0ea871-4406-4&from=paste&height=164&id=uc473c7c7&name=image.png&originHeight=164&originWidth=565&originalType=binary&ratio=1&rotation=0&showTitle=false&size=18363&status=done&style=none&taskId=ub8f10433-db4c-4f07-838a-41f47350dd5&title=&width=565)
+#### After
+指定EXPECT_CALL发生在其他EXPECT_CALL之后。
+#### Action
+一个mock对象并没有功能实现，必须由使用者指定每次的调用结果。通过若干个WillOnce()语句搭配一个WillRepeatedly()语句进行指定。
+Action包括Returning a Value，Side Effects，Using a Function, Functor, or Lambda。
+### 多个EXPECT_CALL
+
+1. 实际中我们会写多个EXPECT_CALL，gmock将逆序搜索所有的EXPECT_CALL，直到找到一个匹配的活跃的EXPECT_CALL。因此在编写match时，更具体的应该位于下方。
+2. EXPECT_CALL是粘性的。粘性的意思是当一个EXPECT_CALL已经饱和后，它仍然是活跃的，当匹配到函数调用后就会报错。我们可以使用.RetriesOnSaturation()从句来使它变成非粘性的，当它饱和后，就不会再参与匹配。
+3. 可以使用InSequence使多个EXPECT_CALL按照一定的顺序进行匹配，否则会报错。在一个Insequence中的EXPECT_CALL是非粘性的。
